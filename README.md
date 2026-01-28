@@ -22,7 +22,7 @@ If the user navigates to the sign-in screen and does not already have an account
 
 These credentials can be used for testing purposes.
 
----
+
 
 ## User Requirements and Features
 
@@ -60,7 +60,6 @@ These credentials can be used for testing purposes.
 * Doctors can join video meetings through the application.
 * Doctors can log out securely.
 
----
 
 ## Team Information
 
