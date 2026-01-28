@@ -22,7 +22,7 @@ class VapiService {
     await VapiClient.platformInitialized.future;
     _client = VapiClient(publicKey.trim());
     _initialized = true;
-    print('✅ Vapi Client Initialized');
+    print(' Vapi Client Initialized');
   }
 
   Future<void> startCall(String assistantId) async {
@@ -30,33 +30,33 @@ class VapiService {
       throw Exception("VapiService not initialized. Call initialize() first.");
     }
 
-    print('🚀 Starting call with assistant: $assistantId');
+    print(' Starting call with assistant: $assistantId');
     _currentCall = await _client!.start(assistantId: assistantId.trim());
-    print('✅ Call object created');
+    print(' Call object created');
 
     _currentCall!.onEvent.listen((event) {
       print('');
-      print('🔔 ========== VAPI EVENT ==========');
-      print('📍 Event Label: ${event.label}');
-      print('📦 Event Value: ${event.value}');
+      print(' ========== VAPI EVENT ==========');
+      print(' Event Label: ${event.label}');
+      print(' Event Value: ${event.value}');
       print('==================================');
       print('');
 
       switch (event.label) {
         case "call-start":
-          print("✅ Call started successfully");
+          print(" Call started successfully");
           break;
 
         case "call-end":
-          print("📞 Call ended");
+          print(" Call ended");
           break;
 
         case "speech-start":
-          print("🗣️ User started speaking");
+          print(" User started speaking");
           break;
 
         case "speech-end":
-          print("🗣️ User finished speaking");
+          print(" User finished speaking");
           break;
 
         case "transcript":
@@ -78,13 +78,13 @@ class VapiService {
           break;
 
         default:
-          print("ℹ️ Unhandled event: ${event.label}");
+          print("ℹ Unhandled event: ${event.label}");
       }
     }, onError: (error) {
-      print('❌ Event stream error: $error');
+      print(' Event stream error: $error');
     });
 
-    print('✅ Event listener attached');
+    print(' Event listener attached');
   }
 
   void _handleTranscript(dynamic value) {
@@ -96,12 +96,12 @@ class VapiService {
       if (value is Map) {
         final text = value['text'] ?? value['transcript'];
         final role = value['role'];
-        print('📝 Role: $role, Text: $text');
+        print(' Role: $role, Text: $text');
       } else if (value is String) {
-        print('📝 Transcript text: $value');
+        print(' Transcript text: $value');
       }
     } catch (e) {
-      print('❌ Error handling transcript: $e');
+      print(' Error handling transcript: $e');
     }
   }
 
@@ -109,7 +109,7 @@ class VapiService {
     if (value == null) return;
 
     try {
-      print('📨 Processing message event...');
+      print(' Processing message event...');
       
       Map<String, dynamic> messageData;
       if (value is Map) {
@@ -117,7 +117,7 @@ class VapiService {
       } else if (value is String) {
         messageData = jsonDecode(value);
       } else {
-        print('⚠️ Unknown message format: ${value.runtimeType}');
+        print(' Unknown message format: ${value.runtimeType}');
         return;
       }
 
@@ -126,8 +126,8 @@ class VapiService {
       final messageType = messageData['type'];
       final role = messageData['role'];
       
-      print('📨 Message Type: $messageType');
-      print('📨 Message Role: $role');
+      print(' Message Type: $messageType');
+      print(' Message Role: $role');
 
       if (messageType == 'tool-calls') {
         print('🔧 Message type is tool-calls');
@@ -142,7 +142,7 @@ class VapiService {
         }
       }
     } catch (e, stackTrace) {
-      print('❌ Error handling message: $e');
+      print(' Error handling message: $e');
       print('Stack trace: $stackTrace');
     }
   }
@@ -151,9 +151,9 @@ class VapiService {
     if (value == null) return;
 
     try {
-      print('🔧 Processing tool-calls event...');
-      print('🔧 Value type: ${value.runtimeType}');
-      print('🔧 Value: $value');
+      print(' Processing tool-calls event...');
+      print(' Value type: ${value.runtimeType}');
+      print(' Value: $value');
       
       List<dynamic> toolCalls = [];
       
@@ -182,10 +182,10 @@ class VapiService {
         print('🔧 Processing ${toolCalls.length} tool calls');
         _processToolCalls(toolCalls);
       } else {
-        print('⚠️ No tool calls found in value');
+        print(' No tool calls found in value');
       }
     } catch (e, stackTrace) {
-      print('❌ Error handling tool-calls: $e');
+      print(' Error handling tool-calls: $e');
       print('Stack trace: $stackTrace');
     }
   }
@@ -202,15 +202,15 @@ class VapiService {
       } else if (value is String) {
         functionData = jsonDecode(value);
       } else {
-        print('⚠️ Unknown function call format: ${value.runtimeType}');
+        print(' Unknown function call format: ${value.runtimeType}');
         return;
       }
 
-      print('🔧 Function Data: $functionData');
+      print(' Function Data: $functionData');
       
       final functionName = functionData['name'] ?? 
                           functionData['function']?['name'];
-      print('🔧 Function Name: $functionName');
+      print(' Function Name: $functionName');
 
       if (functionName == 'book_appointment') {
         final arguments = functionData['arguments'] ?? 
@@ -220,21 +220,21 @@ class VapiService {
         _processArguments(arguments);
       }
     } catch (e, stackTrace) {
-      print('❌ Error handling function call: $e');
+      print(' Error handling function call: $e');
       print('Stack trace: $stackTrace');
     }
   }
 
   void _processToolCalls(List toolCalls) {
-    print('🔧 ========== PROCESSING TOOL CALLS ==========');
-    print('🔧 Number of tool calls: ${toolCalls.length}');
+    print(' ========== PROCESSING TOOL CALLS ==========');
+    print(' Number of tool calls: ${toolCalls.length}');
     
     for (var i = 0; i < toolCalls.length; i++) {
       final toolCall = toolCalls[i];
-      print('🔧 Tool Call #$i: $toolCall');
+      print(' Tool Call #$i: $toolCall');
       
       if (toolCall is! Map) {
-        print('⚠️ Tool call is not a Map, skipping');
+        print(' Tool call is not a Map, skipping');
         continue;
       }
       
@@ -242,29 +242,29 @@ class VapiService {
       final type = toolCallMap['type'];
       final functionData = toolCallMap['function'];
       
-      print('🔧 Tool Call Type: $type');
-      print('🔧 Function Data: $functionData');
+      print(' Tool Call Type: $type');
+      print(' Function Data: $functionData');
 
       if (functionData != null && functionData is Map) {
         final functionMap = Map<String, dynamic>.from(functionData);
         final functionName = functionMap['name'];
         
-        print('🔧 Function Name: $functionName');
+        print(' Function Name: $functionName');
 
         if (functionName == 'book_appointment') {
           final arguments = functionMap['arguments'];
-          print('🔧 Found book_appointment function with arguments: $arguments');
+          print(' Found book_appointment function with arguments: $arguments');
           _processArguments(arguments);
         }
       }
     }
-    print('🔧 ========================================');
+   
   }
 
   void _processArguments(dynamic arguments) {
-    print('📦 ========== PROCESSING ARGUMENTS ==========');
-    print('📦 Arguments: $arguments');
-    print('📦 Arguments Type: ${arguments.runtimeType}');
+ 
+    print(' Arguments: $arguments');
+    print(' Arguments Type: ${arguments.runtimeType}');
 
     try {
       Map<String, dynamic> formData;
@@ -274,17 +274,17 @@ class VapiService {
       } else if (arguments is String) {
         formData = Map<String, dynamic>.from(jsonDecode(arguments));
       } else {
-        print('❌ Unknown arguments type: ${arguments.runtimeType}');
+        print(' Unknown arguments type: ${arguments.runtimeType}');
         return;
       }
 
-      print('🎉 ========== EXTRACTED FORM DATA ==========');
+      print(' ========== EXTRACTED FORM DATA ==========');
       print('appointmentType: ${formData['appointmentType']}');
       print('date: ${formData['date']}');
       print('time: ${formData['time']}');
       print('reason: ${formData['reason']}');
       print('==========================================');
-      print('ℹ️  Doctor and Room will be selected manually by user');
+      print('  Doctor and Room will be selected manually by user');
       
       final filteredData = {
         'appointmentType': formData['appointmentType'],
@@ -295,18 +295,18 @@ class VapiService {
       
       _formDataController.add(filteredData);
       
-      print('✅ Form data sent to stream (without doctor/room)!');
+      print(' Form data sent to stream (without doctor/room)!');
     } catch (e, stackTrace) {
-      print('❌ Error processing arguments: $e');
+      print(' Error processing arguments: $e');
       print('Stack trace: $stackTrace');
     }
   }
 
   Future<void> stopCall() async {
-    print('🛑 Stopping call...');
+    print(' Stopping call...');
     await _currentCall?.stop();
     _currentCall = null;
-    print('✅ Call stopped');
+    print(' Call stopped');
   }
 
   bool get isMuted => _currentCall?.isMuted ?? false;
@@ -314,11 +314,11 @@ class VapiService {
   Future<void> toggleMute() async {
     if (_currentCall == null) return;
     _currentCall!.setMuted(!isMuted);
-    print('🔇 Mute toggled: ${!isMuted}');
+    print(' Mute toggled: ${!isMuted}');
   }
 
   void dispose() {
-    print('🧹 Disposing VapiService...');
+    print(' Disposing VapiService...');
     _formDataController.close();
     _currentCall?.dispose();
     _client?.dispose();
