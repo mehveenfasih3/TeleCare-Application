@@ -66,3 +66,6 @@ These credentials can be used for testing purposes.
 * **Team Name:** Techxpert
 * **Group Member:** Mehveen Fasih
 
+* Public Presentation Link : https://www.canva.com/design/DAG_rfZjdWw/LB_9HtJbjMcPdT2ND-s7rQ/view?utm_content=DAG_rfZjdWw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h5a4f79576a
+  
+
