@@ -41,9 +41,7 @@ These credentials can be used for testing purposes.
 
 * Nurses can create, edit, and manage rooms and beds.
 * Nurses can assign beds and rooms to emergency patients.
-* Nurses can view and manage medicines.
-* Nurses can add medicines to the system.
-* Nurses can view a **daily health tip** for awareness and education.
+* Nurse can view the pending appointments, and emergency patients
 
 ### Patient Module
 
